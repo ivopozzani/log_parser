@@ -27,10 +27,10 @@ To run this project, make sure you have all technologies above previously instal
 $ git clone https://github.com/ivopozzani/log_parser.git
 
 ```
-* Navigate to ../log_parser/lib
+* Navigate to ./log_parser
 * Run Ruby
 
 ```
-$ irb
+$ ruby main.rb
 
 ```
