@@ -8,6 +8,8 @@ class ReadFile
     end
     
     def print_first_line
-        print @file.readline
+        first_line = @file.readline
+        @file.close
+        print first_line
     end       
 end
