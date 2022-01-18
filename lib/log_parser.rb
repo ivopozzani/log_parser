@@ -3,7 +3,7 @@ class LogParser
     
   def initialize(file_path)
     @file_path = file_path
-   raise "File not found" unless File.exists?(@file_path)
+    raise "File not found" unless File.exists?(@file_path)
     @file = File.open(@file_path)       
   end
     
