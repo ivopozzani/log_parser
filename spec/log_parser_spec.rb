@@ -13,7 +13,11 @@ describe 'LogParser' do
   end
 
   describe '#parse_file' do
-    it 'counts log lines' do
+    it 'counts file lines' do
+      file = LogParser.new("games.log")
+      expect(file.line_counter).to be == 5306
+    end
+    it 'returns JSON object' do
       file = LogParser.new("games.log")
       expect(file.parse_file).to include("{\"games.log\":{\"lines\":")
     end
