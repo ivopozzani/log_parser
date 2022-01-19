@@ -1,6 +1,6 @@
 require 'log_parser'
 
-describe 'ReadFile' do
+describe 'LogParser' do
   describe '#read_first_line' do
     it 'prints first line' do
        file = LogParser.new("games.log")
@@ -9,6 +9,13 @@ describe 'ReadFile' do
 
     it 'checks file path' do
        expect { LogParser.new("games.txt") }.to raise_error(RuntimeError, "File not found")
+    end
+  end
+
+  describe '#parse_file' do
+    it 'counts log lines' do
+      file = LogParser.new("games.log")
+      expect(file.parse_file).to include("{\"games.log\":{\"lines\":")
     end
   end
 end
