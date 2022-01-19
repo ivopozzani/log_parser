@@ -34,3 +34,11 @@ $ git clone https://github.com/ivopozzani/log_parser.git
 $ ruby main.rb
 
 ```
+
+* To run rspec test navigate to ./log_parser then run command below (it should return you a report with all examples and failures)
+
+```
+$ rspec spec --format documentation
+
+```
+
