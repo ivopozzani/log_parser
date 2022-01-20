@@ -6,7 +6,6 @@ class LogParser
     @file_path = file_path
     raise "File not found" unless File.exists?(@file_path)
     @file = File.open(@file_path)
-    @line_count = 0    
   end
     
   def read_first_line
