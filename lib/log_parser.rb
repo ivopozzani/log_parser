@@ -22,6 +22,6 @@ class LogParser
 
   private
   def line_counter    
-    @line_count = @file.readlines.length
+    @file.readlines.length
   end  
 end
