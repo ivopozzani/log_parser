@@ -14,15 +14,19 @@ describe LogParser do
     end
   end
 
-  describe '#parse_file' do    
-    it 'returns JSON object' do
-      file = LogParser.new("games.log")
+  describe '#parse_file' do
+    let(:file) { LogParser.new("games.log") }
+     
+    it 'returns JSON object' do 
       expect(file.parse_file).to include("{\"games.log\":{\"lines\":")
     end
 
     it 'returns number of file lines in JSON object' do
-      file = LogParser.new("games.log")
-      expect(file.parse_file).to include("{\"games.log\":{\"lines\":5306}}")
+      expect(file.parse_file).to include("{\"games.log\":{\"lines\":5306")
+    end
+
+    it 'returns an array of players in JSON object' do
+      expect(file.parse_file).to include("players\":[\"Isgalamido\",\"Dono da Bola\",\"Mocinha\",\"Zeh")
     end
   end
 end
