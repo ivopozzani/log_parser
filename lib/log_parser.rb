@@ -16,7 +16,7 @@ class LogParser
   end
 
   def parse_file    
-    parse_json = JSON.generate({@file_path => {"lines" => line_counter}})
+    parse_json = JSON.generate({@file_path => {"lines" => line_counter, "players" => find_players}})
     @file.close
     parse_json
   end
@@ -25,5 +25,16 @@ class LogParser
   
   def line_counter    
     @file.readlines.length
+  end
+
+  def find_players
+    players = []
+    for line in File.foreach(@file_path) do
+      if line.include?("ClientUser")
+        player_name = line.slice(/\\(\w+\s*)+/).delete_prefix("\\")
+        players << player_name unless players.include?(player_name)
+      end          
+    end
+    players  
   end  
 end
