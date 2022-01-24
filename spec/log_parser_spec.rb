@@ -9,16 +9,16 @@ describe LogParser do
 
   describe '#read_first_line' do
     it 'prints first line' do
-       file = LogParser.new("games.log")
+       file = LogParser.new("./spec/fixtures/game_test.log")
        expect(file.read_first_line).to eq("  0:00 ------------------------------------------------------------\n")      
     end
   end
 
   describe '#parse_file' do
-    let(:file) { LogParser.new("games.log") }
+    let(:file) { LogParser.new("./spec/fixtures/game_test.log") }
      
     it 'returns JSON object' do 
-      expect(file.parse_file).to include("{\"games.log\":{\"lines\":5306,\"players\":[\"Isgalamido\",\"Dono da Bola\",\"Mocinha")
+      expect(file.parse_file).to include("{\"./spec/fixtures/game_test.log\":{\"lines\":6,\"players\":[\"Isgalamido\",\"Dono da Bola\",\"Mocinha")
     end    
   end
 end
