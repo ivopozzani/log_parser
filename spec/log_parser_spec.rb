@@ -18,7 +18,7 @@ describe LogParser do
     let(:file) { LogParser.new("./spec/fixtures/game_test.log") }
      
     it 'returns JSON object' do 
-      expect(file.parse_file).to include("{\"./spec/fixtures/game_test.log\":{\"lines\":6,\"players\":[\"Isgalamido\",\"Dono da Bola\",\"Mocinha")
+      expect(file.parse_file).to include("{\"./spec/fixtures/game_test.log\":{\"lines\":5,\"players\":[\"Isgalamido\",\"Dono da Bola\",\"Mocinha")
     end    
   end
 end
