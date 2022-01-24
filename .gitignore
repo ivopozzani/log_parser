@@ -1,2 +1,5 @@
-#ignore all logs
-*.log
+#ignore log
+games.log
+
+#simplecov coverage test
+coverage
