@@ -8,6 +8,9 @@ class LogParser
     raise 'File not found' unless File.exist?(@file_path)
 
     @file = File.open(@file_path)
+    @players = []
+    @player_hash_list = {}
+    @total_kills = 0
   end
 
   def read_first_line
@@ -17,7 +20,8 @@ class LogParser
   end
 
   def parse_file
-    parse_json = JSON.generate({ @file_path => { 'lines' => line_counter, 'players' => find_players } })
+    parse_json = JSON.generate({ @file_path => { 'lines' => line_counter, 'players' => find_players,
+                                                 'kills' => kills_list, 'total_kills' => @total_kills } })
     @file.close
     parse_json
   end
@@ -29,13 +33,29 @@ class LogParser
   end
 
   def find_players
-    players = []
     File.foreach(@file_path).each do |line|
       if line.include?('ClientUser')
         player_name = line.slice(/\\(\w+\s*)+/).delete_prefix('\\')
-        players << player_name unless players.include?(player_name)
+        @players << player_name unless @players.include?(player_name)
       end
     end
-    players
+    @players
+  end
+
+  def initiate_hash_list
+    find_players if @players.empty?
+    @players.each { |player| @player_hash_list[player] = 0 }
+  end
+
+  def kills_list
+    initiate_hash_list if @player_hash_list.empty?
+    File.foreach(@file_path).each do |line|
+      next unless line.include?('Kill')
+
+      @total_kills += 1
+      killer_name = line.slice(/[<?\w+\s*>?]+(?=\skilled)/).delete_prefix("\s")
+      @player_hash_list[killer_name] += 1 if @player_hash_list.key?(killer_name)
+    end
+    @player_hash_list
   end
 end
