@@ -16,6 +16,7 @@ Project is created with:
     - rspec-expectations: 3.10.2
     - rspec-mocks: 3.10.2
     - rspec-support: 3.10.3
+* SimpleCov: 0.21.2 (https://github.com/simplecov-ruby/simplecov)
 * rvm: 1.29.12  (https://rvm.io/rvm/install)
 	
 ## Setup
@@ -42,3 +43,9 @@ $ rspec spec --format documentation
 
 ```
 
+* SimpleCov will run automatically after runing rspec tests. To see the coverage test on Ubuntu run the command bellow.
+
+```
+$ xdg-open coverage/index.html
+
+```
