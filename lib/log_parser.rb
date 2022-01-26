@@ -1,5 +1,3 @@
-require 'json'
-
 class LogParser
   attr_accessor :file_path
 
@@ -9,7 +7,7 @@ class LogParser
 
     @file = File.open(@file_path)
     @players = []
-    @players_kills = {}
+    @player_kills = {}
     @total_kills = 0
   end
 
@@ -20,8 +18,8 @@ class LogParser
   end
 
   def parse_file
-    parse_json = JSON.generate({ @file_path => { 'lines' => line_counter, 'players' => find_players,
-                                                 'kills' => kills_list, 'total_kills' => @total_kills } })
+    parse_json = { @file_path => { 'lines' => line_counter, 'players' => find_players,
+                                   'kills' => kills_list, 'total_kills' => @total_kills } }
     @file.close
     parse_json
   end
@@ -42,22 +40,22 @@ class LogParser
     @players
   end
 
-  def players_to_hash
+  def player_kill_list
     find_players if @players.empty?
-    @players.each { |player| @players_kills[player] = 0 }
+    @players.each { |player| @player_kills[player] = 0 }
   end
 
   def kills_list
-    players_to_hash if @players_kills.empty?
+    player_kill_list if @player_kills.empty?
     File.foreach(@file_path).each do |line|
       next unless line.include?('Kill')
 
       killer_name = line.slice(/[<?\w+\s*>?]+(?=\skilled)/).delete_prefix("\s")
-      if @players_kills.key? killer_name
-        @players_kills[killer_name] += 1
+      if @player_kills.key? killer_name
+        @player_kills[killer_name] += 1
         @total_kills += 1
       end
     end
-    @players_kills
+    @player_kills
   end
 end
