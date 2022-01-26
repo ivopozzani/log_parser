@@ -9,7 +9,7 @@ class LogParser
 
     @file = File.open(@file_path)
     @players = []
-    @player_hash_list = {}
+    @players_kills = {}
     @total_kills = 0
   end
 
@@ -42,20 +42,22 @@ class LogParser
     @players
   end
 
-  def initiate_hash_list
+  def players_to_hash
     find_players if @players.empty?
-    @players.each { |player| @player_hash_list[player] = 0 }
+    @players.each { |player| @players_kills[player] = 0 }
   end
 
   def kills_list
-    initiate_hash_list if @player_hash_list.empty?
+    players_to_hash if @players_kills.empty?
     File.foreach(@file_path).each do |line|
       next unless line.include?('Kill')
 
-      @total_kills += 1
       killer_name = line.slice(/[<?\w+\s*>?]+(?=\skilled)/).delete_prefix("\s")
-      @player_hash_list[killer_name] += 1 if @player_hash_list.key?(killer_name)
+      if @players_kills.key? killer_name
+        @players_kills[killer_name] += 1
+        @total_kills += 1
+      end
     end
-    @player_hash_list
+    @players_kills
   end
 end
