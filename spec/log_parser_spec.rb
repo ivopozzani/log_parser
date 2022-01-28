@@ -19,7 +19,7 @@ describe LogParser do
 
     it 'returns JSON object' do
       expect(file.parse_file).to be == { './spec/fixtures/game_test.log' => {
-        'kills' => { 'Dono da Bola' => 2, 'Isgalamido' => 4,
+        'kills' => { 'Dono da Bola' => 2, 'Isgalamido' => 2,
                      'Mocinha' => 1 }, 'lines' => 13, 'players' => ['Isgalamido', 'Dono da Bola', 'Mocinha'], 'total_kills' => 7
       } }
     end

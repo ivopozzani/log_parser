@@ -51,11 +51,19 @@ class LogParser
       next unless line.include?('Kill')
 
       killer_name = line.slice(/[<?\w+\s*>?]+(?=\skilled)/).delete_prefix("\s")
-      if @player_score.key? killer_name
-        @player_score[killer_name] += 1
-        @total_kills += 1
-      end
+      dead_player = line.slice(/killed(\s\w+)+(?=\sby)/).delete_prefix("killed\s")
+      set_score(killer_name, dead_player)
     end
     @player_score
+  end
+
+  def set_score(killer_name, dead_player)
+    if @player_score.key? killer_name
+      @total_kills += 1
+      @player_score[killer_name] += 1
+      @player_score[killer_name] -= 1 if killer_name == dead_player
+    else
+      @player_score[dead_player] -= 1
+    end
   end
 end
