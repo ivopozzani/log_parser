@@ -2,10 +2,11 @@
 
 source 'https://rubygems.org'
 
+# Ruby
 ruby '3.1.0'
 
-gem 'simplecov', require: false, group: :test
+group :test do
+  gem 'simplecov', require: false
 
-# gem "rails"
-
-gem 'rspec', '~>3.0'
+  gem 'rspec', '~>3.0'
+end
